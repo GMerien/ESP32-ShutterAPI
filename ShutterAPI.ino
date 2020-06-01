@@ -11,7 +11,6 @@ int nbTry = 0;
 
 AsyncWebServer server(80);
 
-const int PUSHBUTTON = 2; 
 const int SERVOPIN = 12;
 
 const int CLOSEDANGLE = 8;
@@ -20,9 +19,6 @@ const int OPENANGLE = 76;
 Servo servo;
 
 int shutterOpenBool = 1;
-
-int pressedButton = 0;
-int lastPressedButton = 0;
 
 bool takingPicture = false;
 
@@ -71,7 +67,6 @@ void setup() {
 
   servo.attach(SERVOPIN);
   servo.setPeriodHertz(50);
-  pinMode(PUSHBUTTON, INPUT);
 
   servo.write(OPENANGLE);
 
@@ -119,9 +114,10 @@ void setup() {
       }
     }
 
-    AsyncWebServerResponse *response = request->beginResponse(200, "text/plain", "takingPicture");
+    AsyncWebServerResponse *response = request->beginResponse(200, "text/plain", "Taking picture");
     addHeader(response);
     request -> send(response);
+  
     shutterTakePicture(duration);
   });
 
